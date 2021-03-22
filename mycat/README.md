@@ -1,5 +1,5 @@
 # mycat
-A simple cat command by go.
+A simple cat command by Go.
 
 # compile
 
