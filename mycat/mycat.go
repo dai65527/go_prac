@@ -9,14 +9,7 @@ import (
 
 var nFlg = flag.Bool("n", false, "display line number")
 
-func displayFile(filename string, lineNo *int) {
-	fs, err := os.Open(filename)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		fs.Close()
-		return
-	}
-
+func displayLines(fs *os.File, lineNo *int) {
 	scanner := bufio.NewScanner(fs)
 	for scanner.Scan() {
 		if *nFlg {
@@ -25,15 +18,27 @@ func displayFile(filename string, lineNo *int) {
 		fmt.Printf("%s\n", scanner.Text())
 		*lineNo++
 	}
+}
 
+func displayFile(filename string, lineNo *int) {
+	fs, err := os.Open(filename)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	} else {
+		displayLines(fs, lineNo)
+	}
 	fs.Close()
 }
 
 func main() {
 	flag.Parse()
+
 	lineNo := 1
-	fmt.Println(flag.Args())
-	for i := 0; i < len(flag.Args()); i++ {
-		displayFile(flag.Args()[i], &lineNo)
+	if len(flag.Args()) == 0 {
+		displayLines(os.Stdin, &lineNo)
+	} else {
+		for i := 0; i < len(flag.Args()); i++ {
+			displayFile(flag.Args()[i], &lineNo)
+		}
 	}
 }
