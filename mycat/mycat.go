@@ -13,7 +13,7 @@ func displayLines(fs *os.File, lineNo *int) {
 	scanner := bufio.NewScanner(fs)
 	for scanner.Scan() {
 		if *nFlg {
-			fmt.Printf("%4d: ", *lineNo)
+			fmt.Printf("%6d ", *lineNo)
 		}
 		fmt.Printf("%s\n", scanner.Text())
 		*lineNo++
