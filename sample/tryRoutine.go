@@ -15,7 +15,7 @@ func main() {
 	fmt.Println("goroutine2 start")
 	go func() {
 		defer fmt.Println("goroutine2 done")
-		time.Sleep(3 * time.Second)
+		time.Sleep(1 * time.Second)
 	}()
 	time.Sleep(5 * time.Second)
 }
