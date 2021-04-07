@@ -13,6 +13,7 @@ type Person struct {
 }
 
 func main() {
+	// encode json
 	var buf bytes.Buffer
 	p := Person{Name: "dnakano", Age: 26}
 	enc := json.NewEncoder(&buf)
@@ -20,4 +21,12 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Print(buf.String())
+
+	// decode json
+	var p2 Person
+	dec := json.NewDecoder(&buf)
+	if err := dec.Decode(&p2); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(p2)
 }
